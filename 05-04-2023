@@ -1,0 +1,24 @@
+Select regions.region_name as regiao,
+       countries.country_name as pais,
+       locations.city as cidade,
+       departments.department_name as departamento,
+       employees.first_name || ' ' || last_name as funcionario,
+       salary as salario,
+       hire_date as datas
+
+from regions
+inner join countries on (countries.region_id = regions.region_id)
+inner join locations on (locations.country_id = countries.country_id)
+inner join departments on ( departments.location_id = locations.location_id)
+inner join employees on (employees.department_id = departments.department_id)
+inner join jobs on (jobs.job_id =  employees.job_id)
+Where first_name like 'A%' or employees.first_name like 'E%'or employees.first_name like 'M%'
+or employees.first_name like 'R%' 
+or salary < 2500 
+or employees.hire_date >= to_date ('01/01/2005', 'dd/mm/yyyy') 
+and employees.salary > 8000 
+or employees.hire_date BETWEEN TO_DATE ('01/01/2002', 'dd/mm/yyyy')
+AND  to_date ('01/01/2003', 'dd/mm/yyyy')
+or employees.department_id not in ( 30,50,60,80,90,100)
+
+order by regiao, pais , cidade, departamento, funcionario
